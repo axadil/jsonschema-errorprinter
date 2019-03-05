@@ -7,7 +7,7 @@
 
 """
 import json
-import cStringIO
+from io import StringIO
 
 from jsonschema import validate
 from jsonschema import FormatChecker, ValidationError
@@ -61,7 +61,7 @@ def generate_validation_error_report(
 
     # Pretty print the object and search for the marker.
     json_error = json.dumps(json_object, indent=4)
-    io = cStringIO.StringIO(json_error)
+    io = StringIO(json_error)
     errline = None
 
     for lineno, text in enumerate(io):
@@ -74,7 +74,7 @@ def generate_validation_error_report(
         report = []
         ob_tmp[e.path[-1]] = orig
         json_error = json.dumps(json_object, indent=4)
-        io = cStringIO.StringIO(json_error)
+        io = StringIO(json_error)
 
         for lineno, text in enumerate(io):
             if lineno == errline:
